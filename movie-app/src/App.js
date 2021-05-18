@@ -5,68 +5,69 @@ import PropTypes from 'prop-types';
 //컴포넌트는 대문자로 시작한다.
 //JSX is html + js.
 //So <App /> is component
-
-const foodILike = [
-  {
-    id: 1,
-    name: "Kimbap",
-    image:
-      "http://cdn2.koreanbapsang.com/wp-content/uploads/2012/05/DSC_1238r-e1454170512295.jpg",
-      rating: 5.0
-  },
-  {
-    id: 2,
-    name: "Doncasu",
-    image:
-      "https://s3-media3.fl.yelpcdn.com/bphoto/7F9eTTQ_yxaWIRytAu5feA/ls.jpg",
-      rating: 4.5
-  },
-  {
-    id: 3,
-    name: "Samgyeopsal",
-    image:
-      "https://3.bp.blogspot.com/-hKwIBxIVcQw/WfsewX3fhJI/AAAAAAAAALk/yHxnxFXcfx4ZKSfHS_RQNKjw3bAC03AnACLcBGAs/s400/DSC07624.jpg",
-      rating: 4.7
-  }
-];
-
-//img tag need alt prop for blinder.
-function Food({ name , picture, rating }
-){
-  return (
-    <div>
-      <h1>I love {name}</h1>
-      <h2>{rating}/5.0</h2>
-      <img src={picture} alt={name}/> 
-    </div>
-  );
-}
-
-//Check prop
-//propTypes로 이름을 지어야 react가 인지하고 체크한다.
-Food.propTypes={
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired
-}
 //propType 관련 문서 
 //https://doc.ebichu.cc/react/docs/typechecking-with-proptypes.html
 
 //react의 모든 element는 다르게 보일 필요가있다.
 //따라서 key라는 prop을 각자다르게 설정해주어야한다.
-function App() {
+
+
+/*
+function App() { //function component
   return (
     <div className="App">
-    {foodILike.map(dish => ( <Food key={dish.id} name={dish.name} picture={dish.image} rating = {dish.rating} /> ))}
     </div>
   );
 }
-//map 함수는 배열의 각인자에 대해 특정 함수를 실행시키고 return 값들로 이루어진 배열을 반환한다.
-//반환된 component배열은 html에 순서대로 기입된다.
+*/
+
+// declare AppComponent is React Component
+class App extends React.Component{  //class component
+  constructor(props){ //render 이전에 호출된다.
+    super(props);
+
+  }
+
+  state = { //state is object. state is needed for dynamic data.
+    count: 0
+  }
+  add = () => {
+     //SetState를 사용하면 React는 render함수 재호출을 통해 새로운 state로 refresh를 진행한다. state 오브젝트 prop에 직접 접근하면 refresh가 되지않아 의미가 없다. render 호출해도 반영이 안됨
+     this.setState(current => ( {count: current.count + 1}));
+   };
+  minus = () => {
+     this.setState(current => ( {count: current.count - 1}));
+     // this.setState({count: this.state.count - 1}) 
+     //위처럼 해도되지만 react가 똑똑하게도 첫번째 인자에 state를 넣어준다
+   };
+  //React는 class component의 Render method를 자동으로 랜더링
+  render(){
+    return  (
+      <div>
+      <h1>I am class {this.state.count} </h1>
+      <button onClick={this.add}>Add</button> 
+      <button onClick={this.minus}>Minus</button>
+      </div>
+    )
+    //() following function is needed for immediate call.
+  }
+
+  //this is following redner func when udpate(setState ~ ) is emerged.
+  componentDidUpdate(){
+    
+  }
+  //mounting은 컴포너틑의 born을 의미한다 즉 시작될때 실행됨
+  //unmounting은 컴포너틑의 kill을 의미한다 즉 페이지가 넘어갈때 실행
+  //this is following render at first time. 
+  componentDidMount(){
+    
+  }
+  componentWillUnmount(){
+    
+  }
+}
 
 
 export default App;
 
 //arg => ( arg * 2 ) === function(arg){ return arg*2; } 
-//react magic App컴포넌트에서 추가한 프로퍼티들은 Food컴포넌트의 인자로 전달이된다.
-//{ name } 전달된 인자중 favorite키 value만을 빼내는 방법이다. 

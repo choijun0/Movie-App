@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types'; 
 import axios from 'axios';
-import Movie from './Movies'
+import Movie from './Movies';
+import "./App.css";
 
 class App extends React.Component{
   state = {
@@ -11,9 +12,16 @@ class App extends React.Component{
   }
   render(){
     const {isLoading, movies} = this.state;
-    return <div>{isLoading ? "Loading" : movies.map(movie => {
-      return <Movie key={movie.id} id={movie.id} year={movie.year} title={movie.title} summary={movie.summary} poster={movie.medium_cover_image} />
-    })}</div>
+    //밑의 코딩이 HTML처럼 보여도 JSX이다 그래서 class라고 쓰면 js 의class 와 html class를 react가 혼동함으로 className이라고 작성해야한다. ex) for -> htmlFor
+    return <section className="container">
+    {isLoading ? <div className="loader">
+    <span className="loader_text">Loading...</span>
+    </div> : <div className="movies">
+     {movies.map(movie => {
+      //key is not a prop
+      return <Movie key={movie.id} id={movie.id} year={movie.year} title={movie.title} summary={movie.summary} poster={movie.medium_cover_image} genres={movie.genres}/>})}
+    </div>}
+    </section>
   }
 
   //함수앞 async 키워드는 기다려햐하는 함수가 있다는 것을 JS에 알리는 것이고 await키워드로 그함수를 특정한다.

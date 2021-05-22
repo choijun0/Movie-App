@@ -15,7 +15,7 @@ class App extends React.Component{
     //밑의 코딩이 HTML처럼 보여도 JSX이다 그래서 class라고 쓰면 js 의class 와 html class를 react가 혼동함으로 className이라고 작성해야한다. ex) for -> htmlFor
     return <section className="container">
     {isLoading ? <div className="loader">
-    <span className="loader_text">Loading...</span>
+    <span className="loader_text">loading...</span>
     </div> : <div className="movies">
      {movies.map(movie => {
       //key is not a prop

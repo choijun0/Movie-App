@@ -4,7 +4,8 @@ import "./Movie.css"
 import {Link} from "react-router-dom"
 
 function Movie({ id, year, title, summary, poster, genres}){
-  return <div className="movie"><Link to={{
+  return <div className="movie">
+	<Link to={{
         //state & pathname is basic property of props's location
         pathname: `movie/${id}`,
         state: {
@@ -23,7 +24,8 @@ function Movie({ id, year, title, summary, poster, genres}){
   { genres.map((genre, index)  => { return <li key={index}className="genres_genre">{genre}</li>}) }</ul>
   <p className="movie_summary">{summary.slice(0,140)}</p>
   </div>
-  </Link></div>
+  </Link>
+	</div>
 }
 
 Movie.protoTypes = { 
